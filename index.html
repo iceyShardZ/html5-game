@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+</body>
+<script src="jquery.hotkeys-master/jquery-1.7.1.js"></script>
+<script src="jquery.hotkeys-master/jquery.hotkeys.js"></script>
+<script src="/key-js-master/key-js-master/key.js"></script>
+<script src="/key-js-master/key-js-master/key.min.js"></script>
+<script>
+KeyJS.startCapture();
+var CANVAS_WIDTH = 480;
+var CANVAS_HEIGHT = 320;
+
+var canvasElement = document.createElement("canvas");
+canvasElement.width = CANVAS_WIDTH
+canvasElement.height = CANVAS_HEIGHT
+canvasElement.style.backgroundColor = 'lavender'
+var canvas = canvasElement.getContext("2d");
+document.body.appendChild(canvasElement);
+var textX = 50;
+var textY = 50;
+var movespeed = 5;
+
+var player = {
+    color: "#00A",
+    x: 220,
+    y: 270,
+    width: 32,
+    height: 32,
+    draw: function() {
+        canvas.fillStyle = this.color;
+        canvas.fillRect(this.x, this.y, this.width, this.height);
+    }
+};
+
+function update() {
+  if ( KeyJS.isDown(KeyJS.LEFT)) {
+    player.x -= movespeed;
+  }
+
+  if ( KeyJS.isDown(KeyJS.RIGHT)) {
+    player.x += movespeed;
+  }
+  if ( KeyJS.isDown(KeyJS.UP)) {
+    player.y -= movespeed;
+  }
+
+  if ( KeyJS.isDown(KeyJS.DOWN)) {
+    player.y += movespeed;
+  }
+//   player.x = player.x.clamp(0, CANVAS_WIDTH - player.width);
+//   player.y = player.y.clamp(0, CANVAS_HEIGHT - player.height);
+}
+
+function draw() {
+  canvas.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  player.draw();
+}
+var FPS = 60;
+setInterval(function() {
+  update();
+  draw();
+}, 1000/FPS);
+</script>
+</html>
